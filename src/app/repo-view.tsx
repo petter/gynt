@@ -1,3 +1,4 @@
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getOctokit } from "@/server/octokit";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,28 +22,28 @@ export async function RepoView({
   });
 
   return (
-    <div className="flex w-full max-w-lg flex-col rounded-sm bg-slate-700 text-slate-50">
-      <div className="flex items-center gap-2 bg-slate-800 p-2">
-        <a href={data.owner.html_url}>
-          <Image
-            src={data.owner.avatar_url}
-            alt=""
-            width={32}
-            height={32}
-            className="rounded-full"
-          />
-        </a>
-        <h2 className="text-xl">
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <a href={data.owner.html_url}>
+            <Image
+              src={data.owner.avatar_url}
+              alt=""
+              width={32}
+              height={32}
+              className="rounded-full border border-slate-300"
+            />
+          </a>
           <a href={data.owner.html_url} className="hover:underline">
             {owner}
           </a>{" "}
-          /{" "}
+          <span>/</span>
           <a href={data.html_url} className="hover:underline">
             {data.name}
           </a>
-        </h2>
-      </div>
-      <div className="p-4">
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="p-4">
         <ul>
           {prs.map((pull) => (
             <li key={pull.number}>
@@ -50,8 +51,8 @@ export async function RepoView({
             </li>
           ))}
         </ul>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
 
