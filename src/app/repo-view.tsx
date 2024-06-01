@@ -38,9 +38,9 @@ export async function RepoView({
             {owner}
           </a>{" "}
           <span>/</span>
-          <a href={data.html_url} className="hover:underline">
+          <Link href={`/${owner}/${repo}`} className="hover:underline">
             {data.name}
-          </a>
+          </Link>
         </CardTitle>
       </CardHeader>
       <CardContent className="p-4">
