@@ -16,7 +16,7 @@ export async function getOctokit() {
 
   const clerkResponse = await clerkClient.users.getUserOauthAccessToken(
     userId,
-    "oauth_github"
+    "oauth_github",
   );
 
   const accessToken = clerkResponse.data[0].token;
