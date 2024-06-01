@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
 import {
   ClerkProvider,
   SignInButton,
@@ -9,7 +10,7 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: "Better PR",
@@ -25,8 +26,10 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          // biome-ignore lint/nursery/useSortedClasses: <explanation>
-          className={[inter.className, "bg-slate-900 text-slate-50"].join(" ")}
+          className={cn(
+            inter.variable,
+            "min-h-screen bg-background font-sans antialiased",
+          )}
         >
           <SignedOut>
             <SignInButton />
