@@ -13,6 +13,7 @@ export default async function Home() {
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 sm:grid-cols-2">
         <RepoView owner="petter" repo="pmoen.me" />
         <RepoView owner="domstolene" repo="designsystem" />
+        <RepoView owner="vercel" repo="next.js" />
       </div>
     </main>
   );

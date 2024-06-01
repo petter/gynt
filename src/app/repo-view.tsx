@@ -19,6 +19,8 @@ export async function RepoView({
   const { data: prs } = await octokit.rest.pulls.list({
     owner,
     repo,
+    per_page: 5,
+    state: "open",
   });
 
   return (
