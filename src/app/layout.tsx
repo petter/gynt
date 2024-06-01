@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>
+        <body className={inter.className + " bg-slate-900 text-slate-50"}>
           <SignedOut>
             <SignInButton />
           </SignedOut>
