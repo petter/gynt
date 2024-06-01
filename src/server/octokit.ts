@@ -10,8 +10,12 @@ export async function getOctokit() {
 
   const { userId } = auth();
 
+  if (!userId) {
+    throw new Error("No user id");
+  }
+
   const clerkResponse = await clerkClient.users.getUserOauthAccessToken(
-    userId!,
+    userId,
     "oauth_github"
   );
 

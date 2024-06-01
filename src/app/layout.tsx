@@ -24,7 +24,10 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className + " bg-slate-900 text-slate-50"}>
+        <body
+          // biome-ignore lint/nursery/useSortedClasses: <explanation>
+          className={[inter.className, "bg-slate-900 text-slate-50"].join(" ")}
+        >
           <SignedOut>
             <SignInButton />
           </SignedOut>

@@ -20,7 +20,7 @@ export async function RepoView({
   });
 
   return (
-    <div className="p-4 bg-slate-700 rounded-sm text-slate-50 max-w-lg w-full">
+    <div className="w-full max-w-lg rounded-sm bg-slate-700 p-4 text-slate-50">
       <h2>{data.name}</h2>
       <ul>
         {prs.map((pull) => (
@@ -39,7 +39,7 @@ type Pull = Awaited<
 
 function PullRequest({ pr }: { pr: Pull }) {
   return (
-    <Link href={pr.html_url} className="p-2 w-full">
+    <Link href={pr.html_url} className="w-full p-2">
       #{pr.number} {pr.title}
     </Link>
   );
