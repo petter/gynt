@@ -17,7 +17,7 @@ export default async function RepoPage({
     .catch(() => notFound());
 
   return (
-    <div className="mx-auto flex max-w-6xl flex-col gap-4 p-4">
+    <div className="flex flex-col gap-4">
       <h1 className="font-bold text-4xl">{data.name}</h1>
       <PullRequests owner={params.owner} repo={params.repo} />
     </div>

@@ -4,10 +4,14 @@ export type PullRequest = Awaited<
   ReturnType<Octokit["rest"]["pulls"]["list"]>
 >["data"][number];
 
-export function prStatus(
-  pr: PullRequest,
-): "open" | "closed" | "draft" | "merged" {
-  if (pr.draft === true) {
+export type PullRequestStatus = "open" | "closed" | "draft" | "merged";
+
+export function prStatus(pr: {
+  draft?: boolean;
+  state: string;
+  merged_at: string | null;
+}): PullRequestStatus {
+  if (pr.draft) {
     return "draft";
   }
   if (pr.state === "open") {
@@ -16,5 +20,9 @@ export function prStatus(
   if (pr.merged_at !== null) {
     return "merged";
   }
-  return "closed";
+  if (pr.state === "closed") {
+    return "closed";
+  }
+
+  throw new Error("Unknown pull request state");
 }

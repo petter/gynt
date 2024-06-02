@@ -1,4 +1,4 @@
-import { PullRequestIcon } from "@/components/pull-request-icon";
+import { PullRequestIcon } from "@/components/pull-request/icon";
 import { type PullRequest, prStatus } from "@/lib/pull-request";
 import Link from "next/link";
 
@@ -9,7 +9,7 @@ interface Props {
 export function PullRequestLink({ pr }: Props) {
   return (
     <Link
-      href={pr.html_url}
+      href={`/${pr.base.repo.owner.login}/${pr.base.repo.name}/pull/${pr.number}`}
       className="flex w-full items-baseline gap-2 rounded-xl border bg-card p-4 text-card-foreground shadow"
     >
       <PullRequestIcon status={prStatus(pr)} />

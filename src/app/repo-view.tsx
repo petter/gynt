@@ -1,4 +1,4 @@
-import { PullRequestIcon } from "@/components/pull-request-icon";
+import { PullRequestIcon } from "@/components/pull-request/icon";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   type PullRequest as PullRequestType,
@@ -66,7 +66,7 @@ export async function RepoView({
 function PullRequest({ pr }: { pr: PullRequestType }) {
   return (
     <Link
-      href={pr.html_url}
+      href={`/${pr.base.repo.owner.login}/${pr.base.repo.name}/pull/${pr.number}`}
       className="flex w-full items-baseline gap-1 rounded-xl bg-card px-4 py-2 text-card-foreground hover:underline"
     >
       <PullRequestIcon status={prStatus(pr)} />
