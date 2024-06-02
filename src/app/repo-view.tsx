@@ -1,8 +1,12 @@
+import { PullRequestIcon } from "@/components/pull-request-icon";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  type PullRequest as PullRequestType,
+  prStatus,
+} from "@/lib/pull-request";
 import { getOctokit } from "@/server/octokit";
 import Image from "next/image";
 import Link from "next/link";
-import type { Octokit } from "octokit";
 
 export async function RepoView({
   owner,
@@ -45,8 +49,8 @@ export async function RepoView({
           </Link>
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-4">
-        <ul>
+      <CardContent className="px-2">
+        <ul className="flex flex-col gap-1">
           {prs.map((pull) => (
             <li key={pull.number}>
               <PullRequest pr={pull} />
@@ -58,14 +62,17 @@ export async function RepoView({
   );
 }
 
-type Pull = Awaited<
-  ReturnType<Octokit["rest"]["pulls"]["list"]>
->["data"][number];
-
-function PullRequest({ pr }: { pr: Pull }) {
+function PullRequest({ pr }: { pr: PullRequestType }) {
   return (
-    <Link href={pr.html_url} className="w-full p-2 hover:underline">
-      #{pr.number} {pr.title}
+    <Link
+      href={pr.html_url}
+      className="flex w-full items-baseline gap-1 rounded-xl bg-card px-4 py-2 text-card-foreground hover:underline"
+    >
+      <PullRequestIcon status={prStatus(pr)} />
+      <div className="flex flex-col gap-1">
+        <span>{pr.title}</span>
+        <span className="text-slate-600 text-sm">#{pr.number}</span>
+      </div>
     </Link>
   );
 }
