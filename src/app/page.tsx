@@ -14,6 +14,7 @@ export default async function Home() {
         <RepoView owner="petter" repo="pmoen.me" />
         <RepoView owner="domstolene" repo="designsystem" />
         <RepoView owner="vercel" repo="next.js" />
+        <RepoView owner="sivertschou" repo="dundring" />
       </div>
     </main>
   );

@@ -31,7 +31,10 @@ export async function RepoView({
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <a href={data.owner.html_url}>
+          <a
+            href={data.owner.html_url}
+            className="flex items-center gap-2 hover:underline"
+          >
             <Image
               src={data.owner.avatar_url}
               alt=""
@@ -39,10 +42,8 @@ export async function RepoView({
               height={32}
               className="rounded-full border border-slate-300"
             />
+            <span>{owner}</span>
           </a>
-          <a href={data.owner.html_url} className="hover:underline">
-            {owner}
-          </a>{" "}
           <span>/</span>
           <Link href={`/${owner}/${repo}`} className="hover:underline">
             {data.name}
