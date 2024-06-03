@@ -1,5 +1,7 @@
 import { Markdown } from "@/components/markdown";
 import { PullRequestBadge } from "@/components/pull-request/badge";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { prStatus } from "@/lib/pull-request";
 import { getOctokit } from "@/server/octokit";
 import { notFound } from "next/navigation";
@@ -9,12 +11,36 @@ interface Props {
 }
 
 export default async function PullPage({ params }: Props) {
-  const octokit = await getOctokit();
+  async function addComment(formData: FormData) {
+    "use server";
+    const octokit = await getOctokit();
+    const comment = formData.get("comment");
+    if (!comment || typeof comment !== "string") {
+      return;
+    }
+    try {
+      const { data } = await octokit.request(
+        "POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews",
+        {
+          owner: params.owner,
+          repo: params.repo,
+          pull_number: +params.pr,
+          body: comment,
+          event: "COMMENT",
+        },
+      );
+      return data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   const prNum = +params.pr;
   if (Number.isNaN(prNum)) {
     notFound();
   }
 
+  const octokit = await getOctokit();
   const { data: pr } = await octokit.rest.pulls.get({
     owner: params.owner,
     repo: params.repo,
@@ -56,6 +82,10 @@ export default async function PullPage({ params }: Props) {
           </div>
         ))}
       </div>
+      <form action={addComment} className="flex flex-col items-start gap-2">
+        <Textarea name="comment" />
+        <Button type="submit">Comment</Button>
+      </form>
     </div>
   );
 }
