@@ -29,7 +29,14 @@ export default async function PullPage({ params }: Props) {
           #{pr.number}
         </a>
       </h1>
-      <PullRequestBadge status={prStatus(pr)} />
+      <div className="flex items-center justify-between gap-2">
+        <PullRequestBadge status={prStatus(pr)} />
+        <div className="flex gap-2 text-sm">
+          <p>{pr.changed_files} files changed</p>
+          <p className="text-green-500">+{pr.additions}</p>
+          <p className="text-red-500">-{pr.deletions}</p>
+        </div>
+      </div>
       <Markdown>{pr.body}</Markdown>
     </div>
   );
