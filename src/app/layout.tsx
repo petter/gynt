@@ -24,11 +24,11 @@ export default function RootLayout({
         <body
           className={cn(
             inter.variable,
-            "min-h-screen bg-background font-sans antialiased",
+            "flex min-h-screen flex-col bg-background font-sans antialiased",
           )}
         >
           <Navigation />
-          {children}
+          <div className="flex-grow">{children}</div>
           <Footer />
         </body>
       </html>
