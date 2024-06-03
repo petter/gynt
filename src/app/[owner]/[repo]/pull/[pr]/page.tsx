@@ -41,17 +41,18 @@ export default async function PullPage({ params }: Props) {
   }
 
   const octokit = await getOctokit();
-  const { data: pr } = await octokit.rest.pulls.get({
-    owner: params.owner,
-    repo: params.repo,
-    pull_number: prNum,
-  });
 
-  const files = await octokit.rest.pulls.listFiles({
+  const commonParams = {
     owner: params.owner,
     repo: params.repo,
     pull_number: prNum,
-  });
+  };
+  const [{ data: pr }, { data: files }, { data: reviews }] = await Promise.all([
+    octokit.rest.pulls.get(commonParams).catch(() => notFound()),
+    octokit.rest.pulls.listFiles(commonParams).catch(() => notFound()),
+    octokit.rest.pulls.listReviews(commonParams).catch(() => notFound()),
+  ]);
+
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-3xl">
@@ -73,7 +74,7 @@ export default async function PullPage({ params }: Props) {
       </div>
       <div>
         <h2 className="text-2xl">Files changed</h2>
-        {files.data.map((file) => (
+        {files.map((file) => (
           <div key={file.filename} className="flex items-center gap-1 text-sm">
             <span className="text-slate-500">{file.status}</span>
             <span>{file.filename}</span>
@@ -82,6 +83,22 @@ export default async function PullPage({ params }: Props) {
           </div>
         ))}
       </div>
+
+      <div className="flex flex-col gap-4">
+        <h2 className="text-2xl">Reviews</h2>
+        {reviews.map((review) => (
+          <div
+            key={review.id}
+            className="flex flex-col items-start gap-1 text-sm"
+          >
+            <span className="text-slate-500">{review.state}</span>
+            <span>{review.user?.login}</span>
+            <span>{review.submitted_at}</span>
+            <Markdown>{review.body}</Markdown>
+          </div>
+        ))}
+      </div>
+
       <form action={addComment} className="flex flex-col items-start gap-2">
         <Textarea name="comment" />
         <Button type="submit">Comment</Button>
