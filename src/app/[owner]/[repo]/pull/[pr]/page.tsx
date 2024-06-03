@@ -37,7 +37,9 @@ export default async function PullPage({ params }: Props) {
           <p className="text-red-500">-{pr.deletions}</p>
         </div>
       </div>
-      <Markdown>{pr.body}</Markdown>
+      <div className="h-96 overflow-y-scroll rounded-xl border p-4 shadow">
+        <Markdown>{pr.body}</Markdown>
+      </div>
     </div>
   );
 }
