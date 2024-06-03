@@ -2,13 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
+import { Footer } from "./footer";
 import { Navigation } from "./navigation";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
@@ -34,6 +29,7 @@ export default function RootLayout({
         >
           <Navigation />
           {children}
+          <Footer />
         </body>
       </html>
     </ClerkProvider>
