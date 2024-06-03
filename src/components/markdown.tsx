@@ -7,7 +7,6 @@ interface Props {
   children: string | null;
 }
 export function Markdown({ children }: Props) {
-  console.log(children);
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
