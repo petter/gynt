@@ -9,6 +9,7 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+import { Navigation } from "./navigation";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -31,12 +32,7 @@ export default function RootLayout({
             "min-h-screen bg-background font-sans antialiased",
           )}
         >
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
+          <Navigation />
           {children}
         </body>
       </html>
