@@ -61,6 +61,13 @@ export default async function PullPage({ params }: Props) {
           #{pr.number}
         </a>
       </h1>
+      <p>
+        Opened by{" "}
+        <a href={pr.user.html_url} className="text-slate-500 hover:underline">
+          {pr.user.login}
+        </a>{" "}
+        at {pr.created_at}
+      </p>
       <div className="flex items-center justify-between gap-2">
         <PullRequestBadge status={prStatus(pr)} />
         <div className="flex gap-2 text-sm">
