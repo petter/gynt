@@ -1,3 +1,3 @@
-# Better PR
+# gynt
 
-A pull request review tool that makes it easy to review pull requests!
+Better peer reviewing experience for GitHub.
