@@ -21,6 +21,11 @@ export default async function PullPage({ params }: Props) {
     pull_number: prNum,
   });
 
+  const files = await octokit.rest.pulls.listFiles({
+    owner: params.owner,
+    repo: params.repo,
+    pull_number: prNum,
+  });
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-3xl">
@@ -39,6 +44,17 @@ export default async function PullPage({ params }: Props) {
       </div>
       <div className="h-96 overflow-y-scroll rounded-xl border p-4 shadow">
         <Markdown>{pr.body}</Markdown>
+      </div>
+      <div>
+        <h2 className="text-2xl">Files changed</h2>
+        {files.data.map((file) => (
+          <div key={file.filename} className="flex items-center gap-1 text-sm">
+            <span className="text-slate-500">{file.status}</span>
+            <span>{file.filename}</span>
+            <span className="text-green-500">+{file.additions}</span>
+            <span className="text-red-500">+{file.deletions}</span>
+          </div>
+        ))}
       </div>
     </div>
   );
