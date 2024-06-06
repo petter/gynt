@@ -3,7 +3,6 @@ import { PullRequestBadge } from "@/components/pull-request/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { prStatus } from "@/lib/pull-request";
-import { cn } from "@/lib/utils";
 import { getOctokit } from "@/server/octokit";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -98,17 +97,9 @@ export default async function PullPage({ params }: Props) {
         <Markdown>{pr.body}</Markdown>
       </div>
       <form action={lgtm}>
-        <button
-          type="submit"
-          disabled={isMyPr}
-          className={cn(
-            "rounded-lg bg-green-500 px-4 py-2 font-bold text-white",
-            !isMyPr && "hover:bg-green-600",
-            isMyPr && "cursor-not-allowed opacity-50",
-          )}
-        >
+        <Button type="submit" disabled={isMyPr}>
           LGTM! :)
-        </button>
+        </Button>
       </form>
       <div>
         <h2 className="text-2xl">Files changed</h2>
