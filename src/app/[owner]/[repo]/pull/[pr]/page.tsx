@@ -6,6 +6,8 @@ import { prStatus } from "@/lib/pull-request";
 import { cn } from "@/lib/utils";
 import { getOctokit } from "@/server/octokit";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import { ChangedFile } from "./changed-file";
 
 interface Props {
   params: { owner: string; repo: string; pr: string };
@@ -110,14 +112,17 @@ export default async function PullPage({ params }: Props) {
       </form>
       <div>
         <h2 className="text-2xl">Files changed</h2>
-        {files.map((file) => (
-          <div key={file.filename} className="flex items-center gap-1 text-sm">
-            <span className="text-slate-500">{file.status}</span>
-            <span>{file.filename}</span>
-            <span className="text-green-500">+{file.additions}</span>
-            <span className="text-red-500">+{file.deletions}</span>
-          </div>
-        ))}
+        <div className="flex flex-col gap-2">
+          {files.map((file) => (
+            <Suspense key={file.sha} fallback={<div>Loading...</div>}>
+              <ChangedFile
+                owner={params.owner}
+                repo={params.repo}
+                file={file}
+              />
+            </Suspense>
+          ))}
+        </div>
       </div>
 
       <div className="flex flex-col gap-4">
