@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { Fragment } from "react";
 
 interface Props {
@@ -12,7 +13,15 @@ export function CodeBlock({ language, children }: Props) {
       {lines.map((line, i) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: line numbers bruh
         <Fragment key={i}>
-          {i + 1}: {line}
+          <span
+            className={cn(
+              "w-full",
+              line.startsWith("+") && "bg-green-300",
+              line.startsWith("-") && "bg-red-300",
+            )}
+          >
+            {i + 1}: {line}
+          </span>
           <br />
         </Fragment>
       ))}
